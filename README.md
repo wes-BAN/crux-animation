@@ -27,3 +27,7 @@ rig:AddClip(clip)
 rig.Enabled = true
 rig:Play("Idle")
 ```
+
+####Credits
+- Liam Hutchison - Help with original concept
+- Stravant - CFrame interpolation utilities
