@@ -21,7 +21,7 @@ local model = Workspace.MyAnimatedModel
 local rig = CruxAnim.Skeleton.new(model)
 
 -- Add the animation clips
-rig:AddClip(clip) -- Add the animation clip
+rig:AddClip(clip)
 
 -- Enable rig and play the idle animation!
 rig.Enabled = true
