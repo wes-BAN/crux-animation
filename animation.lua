@@ -7,6 +7,8 @@ local ANIMATION_FPS = 60
 -- Enums ------
 ---------------
 
+Module.Enum = {}
+
 Module.Enum.BlendMode = {
 	["Blend"] = 1;
 	["Additive"] = 1;
