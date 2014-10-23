@@ -3,7 +3,7 @@ return {
 	Speed = 0.7;
 	WrapMode = "Loop";
 	Joints = {
-		["Root"] = {
+		["RootJoint"] = {
 			{
 				CFrame = CFrame.Angles(0, 0, 0),
 				Frame = 1,
@@ -45,7 +45,7 @@ return {
 				Frame = 21,
 			}
 		};
-		["RightHip"] = {
+		["Right Hip"] = {
 			{
 				CFrame = CFrame.new(-0.5, -1, 0),
 				Frame = 1,
@@ -67,7 +67,7 @@ return {
 				Frame = 21,
 			},
 		};
-		["LeftHip"] = {
+		["Left Hip"] = {
 			{
 				CFrame = CFrame.new(0.5, -1, 0),
 				Frame = 1,
@@ -90,7 +90,7 @@ return {
 			},
 		};
 		
-		["RightShoulder"] = {
+		["Right Shoulder"] = {
 			{
 				CFrame = CFrame.new(1, 0.5, 0),
 				Frame = 1,
@@ -100,7 +100,7 @@ return {
 				Frame = 21,
 			},
 		};
-		["LeftShoulder"] = {
+		["Left Shoulder"] = {
 			{
 				CFrame = CFrame.new(-1, 0.5, 0),
 				Frame = 1,
