@@ -541,29 +541,29 @@ local AnimationClip = {} do
 	local ANIMCLIP_DEFAULT_SPEED = 1.0
 	local ANIMCLIP_DEFAULT_STYLE = "Linear"
 
-	local function readFormat(format)
+	local function readFormat(input)
+		local format = {}
 		local clipData;
 		local name;
 		local speed;
 		local blendMode, wrapMode;
 		local weight, timeStretch;
 
-		if not format then
+		if not input then
 			error("AnimationClip :: No data supplied to create AnimationClip with", 3)
 		end
 
-		if type(format) == "table" then
+		if type(input) == "table" then
+			format = input
 			clipData = format
-		elseif type(format) == "userdata" and format:IsA("ModuleScript") then
-			clipData = require(format)
+		elseif type(input) == "userdata" and input:IsA("ModuleScript") then
+			format = require(input)
+			clipData = format
 		end
 
-		if not format.Joints then
-			error("AnimationClip :: 'Joints' expected inside clip format", 3)
+		if type(clipData.Joints) ~= "table" then
+			error("AnimationClip :: 'Joints' table expected inside clip format", 3)
 		end
-
-		-- Set Joints
-		clipData.Joints = format.Joints
 
 		-- Get enum values
 		name      = format.Name
