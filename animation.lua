@@ -11,7 +11,7 @@ Module.Enum = {}
 
 Module.Enum.BlendMode = {
 	["Blend"] = 1;
-	["Additive"] = 1;
+	["Additive"] = 2;
 }
 
 Module.Enum.WrapMode = {
