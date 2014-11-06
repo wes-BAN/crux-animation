@@ -28,6 +28,11 @@ rig.Enabled = true
 rig:Play("Idle")
 ```
 
+####Notes
+- Only affects C0 property of joints.
+- Updates asynchronously by default. This behavior can be overridden by manually calling the `_Update(deltaTime)` method on the skeleton, but for procedurally generated animations it's recommended you use the existing callback system.
+- The existing callback system isn't documented ;)
+
 ####Credits
 - Liam Hutchison - Help with original concept
 - Stravant - CFrame interpolation utilities
