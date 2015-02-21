@@ -11,6 +11,7 @@ local asin = math.asin
 local cos = math.cos
 local acos = math.acos
 local pow = math.pow
+local sqrt = math.sqrt
 local pi = math.pi
 
 ---------------
@@ -248,20 +249,20 @@ local function quaternionFromCFrame(cf)
 	local trace = m00 + m11 + m22
 
 	if trace > 0 then
-		local s = math.sqrt(1 + trace)
+		local s = sqrt(1 + trace)
 		local recip = 0.5/s
 		return (m21-m12)*recip, (m02-m20)*recip, (m10-m01)*recip, s*0.5
 	else
 		if m11 > m00 then
-			local s = math.sqrt(m11-m22-m00+1)
+			local s = sqrt(m11-m22-m00+1)
 			local recip = 0.5/s
 			return (m01+m10)*recip, 0.5*s, (m21+m12)*recip, (m02-m20)*recip
 		elseif m22 > (i == 0 and m00 or m11) then
-			local s = math.sqrt(m22-m00-m11+1)
+			local s = sqrt(m22-m00-m11+1)
 			local recip = 0.5/s
 			return (m02+m20)*recip, (m12+m21)*recip, 0.5*s, (m10-m01)*recip
 		else
-			local s = math.sqrt(m00-m11-m22+1)
+			local s = sqrt(m00-m11-m22+1)
 			local recip = 0.5/s
 			return 0.5*s, (m10+m01)*recip, (m20+m02)*recip, (m21-m12)*recip
 		end
@@ -274,20 +275,20 @@ local function quaternionSlerp(a, b, t)
 
 	if cosTheta >= 0.0001 then
 		if (1 - cosTheta) > 0.0001 then
-			local theta = math.acos(cosTheta)
-			local invSinTheta = 1/math.sin(theta)
-			startInterp = math.sin((1-t)*theta)*invSinTheta
-			finishInterp = math.sin(t*theta)*invSinTheta
+			local theta = acos(cosTheta)
+			local invSinTheta = 1/sin(theta)
+			startInterp = sin((1-t)*theta)*invSinTheta
+			finishInterp = sin(t*theta)*invSinTheta
 		else
 			startInterp = 1-t
 			finishInterp = t
 		end
 	else
 		if (1+cosTheta) > 0.0001 then
-			local theta = math.acos(-cosTheta)
-			local invSinTheta = 1/math.sin(theta)
-			startInterp = math.sin((t-1)*theta)*invSinTheta
-			finishInterp = math.sin(t*theta)*invSinTheta
+			local theta = acos(-cosTheta)
+			local invSinTheta = 1/sin(theta)
+			startInterp = sin((t-1)*theta)*invSinTheta
+			finishInterp = sin(t*theta)*invSinTheta
 		else
 			startInterp = t-1
 			finishInterp = t
