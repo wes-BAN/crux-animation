@@ -3,6 +3,16 @@ local Stepped = Game:GetService("RunService").Stepped
 
 local ANIMATION_FPS = 60
 
+local floor = math.floor
+local modf = math.modf
+local abs = math.abs
+local sin = math.sin
+local asin = math.asin
+local cos = math.cos
+local acos = math.acos
+local pow = math.pow
+local pi = math.pi
+
 ---------------
 -- Enums ------
 ---------------
@@ -56,7 +66,7 @@ local function sign(n)
 end
 
 local function round(n)
-	return n > 0 and math.floor(n + 0.5) or math.ceil(n - 0.5)
+	return floor(n + 0.5)
 end
 
 local function clamp(n, min, max)
@@ -347,19 +357,19 @@ local Easing = {} do
 	end
 
 	Easing.QuartIn = function(step)
-		return step ^ (1/4)
+		return step ^ 0.25
 	end
 
 	Easing.SineIn = function(step)
-		return 1 - math.cos(step * math.pi / 2)
+		return 1 - cos(step * pi * 0.5)
 	end
 
 	Easing.SineOut = function(step)
-		return math.sin(step * math.pi / 2)
+		return sin(step * pi * 0.5)
 	end
 
 	Easing.SineInOut = function(step)
-		return 0.5 + math.cos(step * math.pi) / -2
+		return 0.5 + cos(step * pi) * -0.5
 	end
 
 	Easing.ElasticOut = function(step, amplitude, period)
@@ -375,14 +385,14 @@ local Easing = {} do
 
 		local s;
 
-		if not a or a < math.abs(c) then
+		if not a or a < abs(c) then
 			a = c
 			s = p / 4
 		else
-			s = p / (2 * math.pi) * math.asin(c/a)
+			s = p / (2 * pi) * asin(c/a)
 		end
 
-		return a * math.pow(2, -10 * t) * math.sin((t * d - s) * (2 * math.pi) / p) + c + b
+		return a * pow(2, -10 * t) * sin((t * d - s) * (2 * pi) / p) + c + b
 	end
 end
 
@@ -732,7 +742,7 @@ local AnimationState = {} do
 
 		-- Do wrapping mode for PingPong playback
 		elseif self.WrapMode == WRAPMODE_PING_PONG then
-			currentTime = length - math.abs(time % (2 * length) - length)
+			currentTime = length - abs(time % (2 * length) - length)
 
 		-- Clamp time otherwise
 		elseif self.WrapMode == WRAPMODE_ONCE or self.WrapMode == WRAPMODE_CLAMP_FOREVER then
@@ -740,7 +750,7 @@ local AnimationState = {} do
 		end
 
 		normalizedTime = clamp(currentTime / length)
-		timeSampleStart, alpha = math.modf((frameCount - 1) * normalizedTime)
+		timeSampleStart, alpha = modf((frameCount - 1) * normalizedTime)
 
 		timeSampleStart = timeSampleStart + 1
 		timeSampleEnd = timeSampleStart % frameCount + 1
@@ -938,7 +948,7 @@ local Skeleton = {} do
 				end
 			end
 
-			-- Ensure that the next iteration in the loop won't be considered the bottom layer
+			-- Ensure that the next iteration in the loop won't be considered as the bottom layer
 			bottomLayer = false
 		end
 
