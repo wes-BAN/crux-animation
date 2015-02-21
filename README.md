@@ -31,6 +31,7 @@ rig:Play("Idle")
 ####Notes
 - Only affects C0 property of joints.
 - Updates asynchronously by default. This behavior can be overridden by manually calling the `_Update(deltaTime)` method on the skeleton, but for procedurally generated animations it's recommended you use the existing callback system.
+- When using the example animations with a default humanoid rig, make sure you set the C1 property of all the joints to `CFrame.new()`.
 - The existing callback system isn't documented ;)
 
 ####Credits
