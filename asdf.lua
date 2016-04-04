@@ -215,6 +215,7 @@ do
 end
 local UsedScriptCollection = { }
 local SceneScripts = { }
+local ToBeReplicated = { }
 local ToBeDestroyed = { }
 local Entity
 do
@@ -466,9 +467,9 @@ do
       end
       local replicatedFromServer = entity:IsDescendantOf(ReplicatedStorage:WaitForChild("__Entities"))
       if RunService:IsServer() and (entity:IsDescendantOf(workspace) or not entity.Parent) then
-        entity.Parent = workspace.CurrentCamera
+        table.insert(ToBeReplicated, entity)
       elseif RunService:IsClient() and (replicatedFromServer or not entity.Parent) then
-        entity.Parent = workspace
+        table.insert(ToBeReplicated, entity)
       end
       if replicatedFromServer then
         local networkId_obj = entity:WaitForChild("__NetworkId")
@@ -761,6 +762,18 @@ do
       local lastTime = tick()
       local shouldResetDelta = true
       self.__class.executionFunctions.first_reserved:bind("execution_", function()
+        if self:isServer() then
+          for i = 1, #ToBeReplicated do
+            ToBeReplicated[i].Parent = workspace.CurrentCamera
+            ToBeReplicated[i] = nil
+          end
+        end
+        if self:isClient() then
+          for i = 1, #ToBeReplicated do
+            ToBeReplicated[i].Parent = workspace
+            ToBeReplicated[i] = nil
+          end
+        end
         self:AwakeAll()
         self:StartAll()
         if shouldResetDelta then
